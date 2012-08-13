@@ -23,13 +23,15 @@ window.FormPropertiesView = Backbone.View.extend ({
         change[target.name] = target.value;
         this.model.set(change);
         console.log(this.model);
+        
+        
     },
     btnSaveOnClick: function (){    	
     	this.model.save ( null, {
     		success: function( event ) {
     			//Backbone.history.start();
     			eventManager.trigger("hideModal", null);
-    			eventManager.trigger("reloadCombos", null);
+    			//eventManager.trigger("reloadCombos", null);
     		}, 
     		error: function( event ) {
     			alert('Error');

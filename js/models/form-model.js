@@ -1,5 +1,5 @@
 window.FormModel = Backbone.Model.extend ({
-	urlRoot: "api/forms",
+	urlRoot: "http://192.168.24.182:8098/users/create",
 	defaults: {
 		"id": null,
 		"name": "",
@@ -15,7 +15,8 @@ window.FormModel = Backbone.Model.extend ({
 });
 
 window.FieldModel = Backbone.Model.extend({
-	urlRoot: "api/fields",
+	urlRoot: "http://192.168.24.182:8098/users/create",
+	//urlRoot: "api/fields",
 	defaults: {
 		"id": null,
 		"title": "",
@@ -31,9 +32,11 @@ window.FieldModel = Backbone.Model.extend({
 window.FormsCollection = Backbone.Collection.extend({
     model:FormModel,
     url:"api/forms"
+    //url: "http://192.168.24.182:8098/users/create",
 });
 
 window.FieldsCollection = Backbone.Collection.extend({
     model:FieldModel,
     url:"api/fields"
+    //url: "http://192.168.24.182:8098/users/create",
 });
