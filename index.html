@@ -38,14 +38,17 @@
 		 <!-- NOTE: memorystore.js will set up an in-memory datastore to allow you to experience the app without setting up
 		back-end infrastructure. All the changes you make to the data will be lost the next time you access the app or hit Refresh.
 		To use the app with a persistent RESTful back-end (provided in the GitHub repo), simply comment out the line below. -->
-		<script src="js/memorystore.js"></script>
-		 
+		 <script src="js/memorystore.js"></script>
+		 <!-- <script src="js/BackboneSync.js"></script> -->
 		 
          <script src="js/utils.js"></script>
+         
          <!-- MODELS  -->
-         	<script src="js/models/form-model.js"></script>
+         <script src="js/models/form-model.js"></script>
+         <script src="js/models/login-model.js"></script>
          
          <!-- VIEWS   -->
+         <script src="js/views/login/login-view.js"></script>
          <script src="js/views/designer-view.js"></script>
          <script src="js/views/designer/form-properties-view.js"></script>
          <script src="js/views/designer/header-view.js"></script>
@@ -53,6 +56,8 @@
          <script src="js/views/designer/sidebar-view.js"></script>
          <script src="js/views/designer/field-view.js"></script>
          
+         
          <script src="js/main.js"></script>
+         
       </body>
    </html>
