@@ -10,5 +10,12 @@ window.HeaderView = Backbone.View.extend ({
         return this;
     },
 	
+	events: {
+		"click #btnAddNewForm": "btnAddNewFormOnClick"
+	},
+	
+	btnAddNewFormOnClick: function() {
+		eventManager.trigger("showModal", new FormModel(), false);
+	}
 	
 });

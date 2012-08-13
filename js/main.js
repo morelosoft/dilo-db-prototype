@@ -1,3 +1,5 @@
+var eventManager = {};
+
 Backbone.View.prototype.close = function () {
     console.log('Closing view ' + this);
     if (this.beforeClose) {
@@ -12,7 +14,7 @@ var AppRouter = Backbone.Router.extend({
 	 	
  	initialize:function () {
    		
-   		//$('#tab3').html(new SidebarFormPropView().render().el);
+    //$('#tab3').html(new SidebarFormPropView().render().el);
    		
    		
 	},
@@ -21,18 +23,22 @@ var AppRouter = Backbone.Router.extend({
 	    "":"login",
 	    "designer":"designer"
 	},
-	
 	login:function () {
-		//TODO: Cargar el login
-	},
+        
+        var loginModel = new LoginModel();
+        
+        $('#appContainer').html(new LoginView({model:loginModel}).render().el);
+        
+        
+    },
 	designer: function() {
 		
 		$('#appContainer').html(new DesignerView().render().el);
 		$('#header').html(new HeaderView().render().el);
    		$('#footer').html(new FooterView().render().el);
-   		$('#tab1').html(new SidebarMainView().render().el);
-   		$('#tab2').html(new SidebarFieldPropView().render().el);
-		
+   		//$('#tab1').html(new SidebarMainView().render().el);
+   		//$('#tab2').html(new SidebarFieldPropView().render().el);
+   		
 		
 		var forms = new FormsCollection();
 		
@@ -40,19 +46,17 @@ var AppRouter = Backbone.Router.extend({
 			success: function( event ) {
 				$('#formListContainer').html(new FormListView({model:forms}).render().el);
 				
-				$("#cmbDatabases").prop('selectedIndex', -1);
+				var idForm = $("#cmbDatabases").prop('selectedIndex');
+				eventManager.trigger("renderFields", idForm);
 			}
 		});
-	}
-	
+		
 
+		
+		
+	}
 });
 
-
-
-
-
-var eventManager = {};
 
 $(document).ready(function () {
 	
@@ -91,15 +95,61 @@ $(document).ready(function () {
 		});
 	});
 	
+	eventManager.on("renderFields", function ( idForm ){
+		
+		//console.log("Busca fields de form: " + idForm)
+		
+		var forms = new FormsCollection();
+		
+		forms.fetch ({
+			success: function( event ) {
+				
+				this._currentModelSelected = forms.models[idForm];
+ 				$("#content").html(new FieldGenericView({model:_currentModelSelected}).render().el);
+			
+
+			},
+			error: function() {
+				
+				alert("Error: No se encontraron celdas para esta base de datos.");
+			}
+		});
+		
+	});
+	
 	
 	
 });
 
+/** Funciones que controlan el estilo de drag and drops **/
+function isInUpperHalf(ui, $droppable)
+{
+    var $draggable = ui.draggable || ui.helper;
+    return (ui.offset.top + $draggable.outerHeight() / 2
+            <= $droppable.offset().top + $droppable.outerHeight() / 2);
+}
+
+function updateHighlight(ui, $droppable)
+{
+    if (isInUpperHalf(ui, $droppable)) {
+        $droppable.removeClass("droppable-below")
+                  .addClass("droppable-above");
+    } else {
+        $droppable.removeClass("droppable-above")
+                  .addClass("droppable-below");
+    }
+}
+    
+function cleanupHighlight(ui, $droppable)
+{
+    ui.draggable.removeData("current-droppable");
+    $droppable.removeClass("droppable-above droppable-below");
+}
 
 
 // Aquí se añade el array de vistas que se vayan a renderizar
 tpl.loadTemplates(['header-view', 'footer-view', 'sidebar-view', 'sidebar-field-prop-view', 'sidebar-form-prop-view', 'form-list', 'form-properties',
-                   'field-generic-view', 'designer-view'], function () {
+                   'field-generic-view', 'designer-view', 'login-view'], function () {
     app = new AppRouter();
     Backbone.history.start();
 });

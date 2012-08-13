@@ -3,6 +3,26 @@ window.store = {
 	formsList: {},
     forms: {},
 
+
+/** Login **/
+
+	populateLogin: function () {
+       this.login[1] = {
+           "id": 1,
+           "name": "Angel",
+           "last1":"Vazquez",
+           "last2": "Quintero",
+           "fullName":"Angel Vazquez Quintero",
+           "email":"aovazquez4037@gmail.com",
+           "password": "angel",
+       }
+    },
+   
+   findLogin: function () {
+           return _.values(this.login);
+   },
+
+/** Forms **/
     populate: function () {
 
         this.forms[1] = {
@@ -32,29 +52,7 @@ window.store = {
 							"isUnique": false,
 							"isPrivate": false,
 						
-						},
-						{
-							"id": "c3",
-							"title": "Text 3",
-							"instructions": "Agregue info de campo 3",
-							"typeOf": "text",
-							"width": 0,
-							"heigth": 0,
-							"isUnique": false,
-							"isPrivate": false,
-						
-						},
-						{
-							"id": "c4",
-							"title": "Text 4",
-							"instructions": "Agregue info de campo 4",
-							"typeOf": "text",
-							"width": 0,
-							"heigth": 0,
-							"isUnique": false,
-							"isPrivate": false,
-						
-						},
+						}
 					  ]
         };
         this.forms[2] = {
@@ -115,6 +113,9 @@ window.store = {
     },
 
     find: function (model) {
+    	
+    	console.log(this.forms[model.id]);
+    	
         return this.forms[model.id];
     },
 
